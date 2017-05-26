@@ -47,6 +47,7 @@ router.route('/news')
   });
 });
 
+//comment
 app.use('/api', router);
 
 app.listen(port, function() { 
