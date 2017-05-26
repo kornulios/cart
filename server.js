@@ -33,7 +33,7 @@ router.route('/news')
   News.find(function(err, news) {
     if (err) res.send(err);
     res.json(news);
-  });
+  }).sort({$natural:-1});
 })
 .post(function(req,res) {
   var news = new News();
