@@ -47,9 +47,11 @@ router.route('/news')
   });
 });
 
-//comment
+//comment modified
 app.use('/api', router);
 
 app.listen(port, function() { 
   console.log('api running on port ' + port); 
 });
+
+//mode comms
