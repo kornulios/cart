@@ -9,7 +9,9 @@ import './App.css';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {data: []};
+    this.state = {
+      data: []
+    };
     this.loadNewsFromServer = this.loadNewsFromServer.bind(this);
   }
 
@@ -25,6 +27,8 @@ class App extends Component {
   }
 
   render() {
+    //const currentNews = this.state.data.slice(0,5);
+
     return (
       <div>
         <h2>News:</h2>
