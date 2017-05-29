@@ -47,6 +47,26 @@ router.route('/news')
   });
 });
 
+router.route('/news/:news_id')
+.put(function(req,res) {
+  News.findById(req.params.news_id, function(err, news){
+    if (err) res.send(err);
+    (req.body.author) ? news.author = req.body.author : null;
+    (req.body.text) ? news.text = req.body.text : null;
+    (req.body.title) ? news.title = req.body.title : null;
+    news.save(function(err) {
+      if (err) res.send(res);
+      res.json({ message: 'News updated' });
+    });
+  });
+})
+.delete(function(req,res) {
+  News.remove({ _id: req.params.news_id }, function(err, news){
+    if (err) res.send(err);
+    res.json({ message: 'News have been deleted' });
+  });
+});
+
 //comment modified
 app.use('/api', router);
 
