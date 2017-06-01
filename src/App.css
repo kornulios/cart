@@ -35,10 +35,15 @@ ul {
   font-weight: bold;
 }
 
+.App-menu li:hover {
+  background: #f9e0e0;
+}
+
 .newsbox {
-  border: 1px solid black;
+  border: 1px solid lightgray;
   padding-left: 3px;
-  border-radius: 4px;
+  /*border-radius: 4px;*/
+  margin-top: -1px;
 }
 
 .pages {
@@ -56,6 +61,7 @@ ul {
 
 .drivers-container {
   flex: 1;
+  padding: 5px;
 }
 
 .fx-container {

@@ -22,6 +22,7 @@ class DriversBox extends Component {
 
     return (
       <div className='drivers-container fx-item'>
+        <h2>Standings:</h2>
         <table>
 
           {headers}
