@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 //import Header from './Header';
 //import RegistrationForm from './RegistrationForm';
 import axios from 'axios';
+import Header from './Header';
+import Menu from './Menu';
 import NewsBox from './NewsBox';
 import DriversBox from './DriversBox';
 import './App.css';
@@ -30,9 +32,13 @@ class App extends Component {
   render() {
 
     return (
-      <div className='fx-container'>
-        <NewsBox data={this.state.data} />
-        <DriversBox />
+      <div>
+        <Header />
+        <Menu />
+        <div className='fx-container'>
+          <NewsBox data={this.state.data} />
+          <DriversBox />
+        </div>
       </div>
     );
   }
