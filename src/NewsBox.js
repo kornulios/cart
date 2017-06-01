@@ -16,18 +16,19 @@ class NewsBox extends Component {
     const totalNewsLength = this.props.data.length;
     const maxPages = totalNewsLength / this.state.newsPerPage;
     if (this.state.currentPage < maxPages)
-      this.setState({currentPage: this.state.currentPage + 1});
+      this.setState({ currentPage: this.state.currentPage + 1 });
   }
 
-  showPrevPage() {
-    if (this.state.currentPage > 1) this.setState({currentPage: this.state.currentPage - 1});
+  showPrevPage(e) {
+    e.preventDefault();
+    if (this.state.currentPage > 1) this.setState({ currentPage: this.state.currentPage - 1 });
   }
 
   render() {
     const lastNews = this.state.currentPage * this.state.newsPerPage;
     const firstNews = lastNews - this.state.newsPerPage;
     const currentNews = this.props.data.slice(firstNews, lastNews);
-    
+
     //console.log (totalNewsLength);
     let newsNodes = currentNews.map(item => {
       return (
@@ -40,9 +41,12 @@ class NewsBox extends Component {
     });
 
     return (
-      <div>
-        { newsNodes }
-        <div className='pages'>
+      <div className='news-container fx-item'>
+        <div  className=''>
+          <h2>News:</h2>
+          {newsNodes}
+        </div>
+        <div className='pages '>
           <a href='#' onClick={this.showPrevPage}>&#9668; Prev</a>&nbsp;
           <a href='#' onClick={this.showNextPage}>Next &#9658;</a>
         </div>

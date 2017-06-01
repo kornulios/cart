@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 //import RegistrationForm from './RegistrationForm';
 import axios from 'axios';
 import NewsBox from './NewsBox';
+import DriversBox from './DriversBox';
 import './App.css';
 
 class App extends Component {
@@ -27,12 +28,11 @@ class App extends Component {
   }
 
   render() {
-    //const currentNews = this.state.data.slice(0,5);
 
     return (
-      <div>
-        <h2>News:</h2>
+      <div className='fx-container'>
         <NewsBox data={this.state.data} />
+        <DriversBox />
       </div>
     );
   }

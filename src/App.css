@@ -28,16 +28,14 @@ body {
 }
 
 .container {
-  width: 700;
+  /*width: 700;
   border: 1px solid green;
-  margin: 0 auto;
+  margin: 0 auto;*/
   
 }
 
 .newsbox {
   border: 1px solid black;
-  width: 860px;
-  margin: 0 auto 5px auto;
   padding-left: 3px;
   border-radius: 4px;
 }
@@ -48,4 +46,31 @@ body {
 
 .pages a {
   text-decoration: none;
+}
+
+.news-container {
+  flex: 2.5;
+  padding: 5px;
+}
+
+.drivers-container {
+  flex: 1;
+  /*float: left;*/
+  /*background: green;*/
+}
+
+.fx-container {
+  border: 1px dashed red;
+  display: flex;
+  margin: auto;
+  width: 900px;
+}
+
+table {
+  width:100%;
+  border: 1px solid green;
+}
+
+td, th {
+  border: 1px solid gray;
 }
