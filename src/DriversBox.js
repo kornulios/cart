@@ -4,9 +4,11 @@ class DriversBox extends Component {
   render() {
     const headers = (
       <thead>
-        <th>#</th>
-        <th>Driver</th>
-        <th>Points</th>
+        <tr>
+          <td>#</td>
+          <td>Driver</td>
+          <td>Points</td>
+        </tr>
       </thead>
     );
 
@@ -21,8 +23,11 @@ class DriversBox extends Component {
     return (
       <div className='drivers-container fx-item'>
         <table>
-          { headers }
-          { tdata }
+
+          {headers}
+          <tbody>
+            {tdata}
+          </tbody>
         </table>
       </div>
     );
