@@ -13,22 +13,36 @@ class DriversBox extends Component {
     );
 
     const tdata = (
-      <tr>
-        <td>1</td>
-        <td>Iatsand</td>
-        <td>0</td>
-      </tr>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Iatsand</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Driver 2</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Driver 3</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>Driver 4</td>
+          <td>0</td>
+        </tr>
+      </tbody>
     );
 
     return (
       <div className='drivers-container fx-item'>
         <h2>Standings:</h2>
         <table>
-
           {headers}
-          <tbody>
-            {tdata}
-          </tbody>
+          {tdata}
         </table>
       </div>
     );
