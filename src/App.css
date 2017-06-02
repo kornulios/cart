@@ -1,6 +1,7 @@
 body {
   font-family: Helvetica, Arial;
   margin: 0;
+  background: #e6e9ea;
 }
 
 ul {
@@ -10,13 +11,15 @@ ul {
 
 
 .App {
-  text-align: center;
+  width: 1024px;
+  background: white;
+  margin: 10px auto;
+  
 }
 
 .App-header {
   background-color: red;
   height: 60px;
-  /*padding: 20px;*/
   color: white;
 }
 
@@ -29,8 +32,6 @@ ul {
 .App-menu > ul > li {
   display: inline-block;
   line-height: 40px;
-  /*border: 1px solid black;*/
-  /*padding: 4px;*/
   padding: 0 12px;
   font-weight: bold;
 }
@@ -42,7 +43,6 @@ ul {
 .newsbox {
   border: 1px solid lightgray;
   padding-left: 3px;
-  /*border-radius: 4px;*/
   margin-top: -1px;
 }
 
@@ -65,7 +65,7 @@ ul {
 }
 
 .fx-container {
-  border: 1px dashed red;
+  /*border: 1px dashed red;*/
   display: flex;
   margin: auto;
   width: 900px;
@@ -73,12 +73,18 @@ ul {
 
 table {
   width:100%;
-  border: 1px solid green;
 }
 
-td, th {
-  border: 1px solid gray;
+thead {
+  background: red;
+  color: white;
 }
+
+tr:nth-of-type(even) {
+  border: 1px solid gray;
+  background: #e6e9ea;
+}
+
 
 #root h1 {
   margin: 0;
