@@ -1,7 +1,10 @@
+
 var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var News = require('./model/news');
+var Drivers =require('./model/drivers');
+
 
 var app = express();
 var router = express.Router();
@@ -55,7 +58,7 @@ router.route('/news/:news_id')
     (req.body.text) ? news.text = req.body.text : null;
     (req.body.title) ? news.title = req.body.title : null;
     news.save(function(err) {
-      if (err) res.send(res);
+      if (err) res.send(err);
       res.json({ message: 'News updated' });
     });
   });
@@ -66,6 +69,16 @@ router.route('/news/:news_id')
     res.json({ message: 'News have been deleted' });
   });
 });
+
+router.route('/drivers').get(
+  (req,res) => {
+    // res.send("Hello driver");
+    Drivers.find((err, drivers) => {
+      if (err) res.send(err);
+      res.json(drivers);
+    })
+  }
+);
 
 //comment modified
 app.use('/api', router);

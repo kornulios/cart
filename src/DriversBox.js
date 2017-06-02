@@ -1,6 +1,22 @@
 import React, { Component } from 'react';
 
 class DriversBox extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      drivers: []
+    }
+  }
+
+  componentDidMount() {
+    fetch('http://aiatsyn1:3001/api/drivers')
+      .then(res => res.json())
+      .then(drivers => {
+        this.setState({ drivers })
+      })
+  }
+
   render() {
     const headers = (
       <thead>
@@ -11,38 +27,23 @@ class DriversBox extends Component {
         </tr>
       </thead>
     );
-
-    const tdata = (
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>Iatsand</td>
-          <td>0</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Driver 2</td>
-          <td>0</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>Driver 3</td>
-          <td>0</td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td>Driver 4</td>
-          <td>0</td>
-        </tr>
-      </tbody>
-    );
-
+    // console.log(this.state.drivers);
+    const ed = this.state.drivers.map((val, index) => {
+      return (<tr key={val._id}>
+        <td>{index+1}</td>
+        <td>{val.name}</td>
+        <td>0</td>
+      </tr>)
+    });
+    // console.log(ed);
     return (
       <div className='drivers-container fx-item'>
         <h2>Standings:</h2>
         <table>
           {headers}
-          {tdata}
+          <tbody>
+            {ed}
+          </tbody>
         </table>
       </div>
     );
