@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 //import logo from './logo.svg';
 //import Header from './Header';
 //import RegistrationForm from './RegistrationForm';
@@ -32,14 +33,18 @@ class App extends Component {
   render() {
 
     return (
-      <div className='App'>
-        <Header />
-        <Menu />
-        <div className='fx-container'>
-          <NewsBox data={this.state.data} />
-          <DriversBox />
+      <Router>
+        <div className='App'>
+          <Header />
+          <Menu />
+          <Route path="/" exact={true} render={props => (
+            <div className='fx-container'>
+              <NewsBox data={this.state.data} />
+              <DriversBox />
+            </div>
+          )} />
         </div>
-      </div>
+      </Router>
     );
   }
 }
