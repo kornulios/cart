@@ -10,6 +10,12 @@ import NewsBox from './NewsBox';
 import DriversBox from './DriversBox';
 import './App.css';
 
+const Schedule = (props) => (
+  <div>
+    <p>Hello schedule!</p>
+  </div>
+)
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -43,6 +49,7 @@ class App extends Component {
               <DriversBox />
             </div>
           )} />
+          <Route path="/schedule" component={Schedule} />
         </div>
       </Router>
     );

@@ -10,7 +10,7 @@ class DriversBox extends Component {
   }
 
   componentDidMount() {
-    fetch('http://aiatsyn1:3001/api/drivers')
+    fetch('http://localhost:3001/api/drivers')
       .then(res => res.json())
       .then(drivers => {
         this.setState({ drivers })

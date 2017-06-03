@@ -36,6 +36,11 @@ ul {
   font-weight: bold;
 }
 
+.App-menu a {
+  text-decoration: none;
+  color: black;
+}
+
 .App-menu li:hover {
   background: #f9e0e0;
 }

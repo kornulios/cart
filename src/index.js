@@ -5,7 +5,7 @@ import App from './App';
 
 ReactDOM.render(
   <App 
-   url='http://aiatsyn1:3001/api/news'
+   url='http://localhost:3001/api/news'
    pollInterval={2000}
   />,
   document.getElementById('root')
