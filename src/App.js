@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-//import logo from './logo.svg';
-//import Header from './Header';
-//import RegistrationForm from './RegistrationForm';
 import axios from 'axios';
-import Header from './Header';
 import Menu from './Menu';
 import NewsBox from './NewsBox';
 import DriversBox from './DriversBox';
 import './App.css';
+
+const Header = () => (
+  <div className='App-header'>
+    <h1>LuxCart</h1>
+  </div>
+)
 
 const Schedule = (props) => (
   <div>
@@ -37,7 +39,6 @@ class App extends Component {
   }
 
   render() {
-
     return (
       <Router>
         <div className='App'>
