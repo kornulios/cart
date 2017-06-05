@@ -11,6 +11,8 @@ var router = express.Router();
 
 var port = process.env.API_PORT || 3001;
 
+console.log(process.env.NODE_ENV);
+
 //db config
 mongoose.connect('mongodb://admin:admin@ds151451.mlab.com:51451/lux-cart');
 

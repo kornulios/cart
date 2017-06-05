@@ -48,15 +48,16 @@ ul {
 .newsbox {
   border: 1px solid lightgray;
   padding-left: 3px;
-  margin-top: -1px;
+  /*margin-top: -1px;*/
+  margin-bottom: 8px;
 }
 
 .newsbox > h3 {
   margin: 0;
   background: lightgray;
   margin-left: -3px;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding-top: 4px;
+  padding-bottom: 4px;
   padding-left: 8px;
 }
 
@@ -79,7 +80,6 @@ ul {
 }
 
 .fx-container {
-  /*border: 1px dashed red;*/
   display: flex;
   margin: auto;
   width: 900px;

@@ -10,7 +10,7 @@ class DriversBox extends Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:3001/api/drivers')
+    fetch('/api/drivers')
       .then(res => res.json())
       .then(drivers => {
         this.setState({ drivers })
@@ -27,7 +27,7 @@ class DriversBox extends Component {
         </tr>
       </thead>
     );
-    // console.log(this.state.drivers);
+    
     const ed = this.state.drivers.map((val, index) => {
       return (<tr key={val._id}>
         <td>{index+1}</td>
@@ -35,7 +35,7 @@ class DriversBox extends Component {
         <td>0</td>
       </tr>)
     });
-    // console.log(ed);
+
     return (
       <div className='drivers-container fx-item'>
         <h2>Standings:</h2>
