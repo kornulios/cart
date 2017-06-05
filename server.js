@@ -29,6 +29,10 @@ app.use(function(req, res, next) {
  next();
 });
 
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('build'));
+}
+
 router.get('/', function(req,res) {
   res.json({ message: 'API Initialized' });
 });
