@@ -4,6 +4,7 @@ import axios from 'axios';
 import Menu from './Menu';
 import NewsBox from './NewsBox';
 import DriversBox from './DriversBox';
+import AdminPanel from './Admin';
 import './App.css';
 
 const Header = () => (
@@ -35,7 +36,7 @@ class App extends Component {
 
   componentDidMount() {
     this.loadNewsFromServer();
-    setInterval(this.loadNewsFromServer, this.props.pollInterval);
+    // setInterval(this.loadNewsFromServer, this.props.pollInterval);
   }
 
   render() {
@@ -51,6 +52,7 @@ class App extends Component {
             </div>
           )} />
           <Route path="/schedule" component={Schedule} />
+          <Route path="/admin" component={AdminPanel} />
         </div>
       </Router>
     );

@@ -14,7 +14,7 @@ ul {
   width: 1024px;
   background: white;
   margin: 10px auto;
-  
+  min-height: 400px;
 }
 
 .App-header {
@@ -105,3 +105,19 @@ tr:nth-of-type(even) {
   line-height: 60px;
 }
 
+.admin-panel-left {
+  width: 160px;
+  float: left;
+}
+
+.admin-panel-left ul > li {
+  list-style: none;
+}
+
+.admin-panel-right {
+  margin-left: 200px;
+}
+
+.admin-table * {
+  border: 1px solid green;
+}
