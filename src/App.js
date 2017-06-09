@@ -41,7 +41,7 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div className='App'>
+        <div className='App' id='home'>
           <Header />
           <Menu />
           <Route path="/" exact={true} render={props => (
