@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 class AdminPanel extends Component {
   constructor(props) {
@@ -7,10 +8,14 @@ class AdminPanel extends Component {
       news: [],
       drivers: [],
       view: 1,
-      addNew: false
+      addNew: false,
+      newsText: 'Add new message here',
+      submitSuccess: false
     }
     this.switchViewPanel = this.switchViewPanel.bind(this);
     this.toggleAddNew = this.toggleAddNew.bind(this);
+    this.handleNewsSubmit = this.handleNewsSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   switchViewPanel(newView) {
@@ -18,7 +23,21 @@ class AdminPanel extends Component {
   }
 
   toggleAddNew() {
-    this.setState({addNew: !this.state.addNew});
+    this.setState({ addNew: !this.state.addNew, submitSuccess: false });
+  }
+
+  handleNewsSubmit(event) {
+    event.preventDefault();
+    const message = this.state.newsText;
+    axios.post('http://localhost:3001/api/news', { author: 'KHead', text: message, title: 'New message' })
+      .then((res) => {
+        console.log('Data saved');
+        this.setState({submitSuccess: true, addNew: false, newsText: 'Add text here'});
+      });
+  }
+
+  handleChange(event) {
+    this.setState({ newsText: event.target.value });
   }
 
   componentDidMount() {
@@ -54,8 +73,24 @@ class AdminPanel extends Component {
         element = (
           <div>
             <p>News list. </p>
-            <button onClick={this.toggleAddNew}>Add new</button><br />
-            {this.state.addNew ? <textarea rows="7" cols="85" defaultValue='Add text'></textarea> : ""}
+
+            {this.state.addNew ?
+              <form onSubmit={this.handleNewsSubmit}>
+                <div>
+                  <textarea
+                    rows="7"
+                    cols="85"
+                    value={this.state.newsText}
+                    onChange={this.handleChange}
+                  />
+                </div>
+                <button onClick={this.toggleAddNew}>Cancel</button>
+                <input type='submit' value='Submit' />
+              </form>
+              :
+              <button onClick={this.toggleAddNew}>Add new</button>
+            }
+            {this.state.submitSuccess ? <div>Form submitted successfully</div> : ""}
           </div>);
         break;
       case 2:
