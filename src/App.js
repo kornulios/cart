@@ -52,7 +52,10 @@ class App extends Component {
             </div>
           )} />
           <Route path="/schedule" component={Schedule} />
-          <Route path="/admin" component={AdminPanel} />
+          {/*<Route path="/admin" component={AdminPanel} />*/}
+          <Route path="/admin" render={
+            props => (<AdminPanel apiPath={this.props.url} />
+            )} />
         </div>
       </Router>
     );
