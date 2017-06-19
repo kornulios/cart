@@ -121,3 +121,9 @@ tr:nth-of-type(even) {
 .admin-table * {
   border: 1px solid green;
 }
+
+label {
+  vertical-align: top;
+  margin-bottom: 5px;
+  /*display: block;*/
+}

@@ -5,7 +5,7 @@ class NewsBox extends Component {
     super(props);
     this.state = {
       currentPage: 1,
-      newsPerPage: 3
+      newsPerPage: 6
     }
     this.showNextPage = this.showNextPage.bind(this);
     this.showPrevPage = this.showPrevPage.bind(this);

@@ -7,7 +7,7 @@ import App from './App';
 
 ReactDOM.render(
   <App 
-   url='/api/news'
+   url='/api'
    pollInterval={2000}
   />,
   document.getElementById('root')

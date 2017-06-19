@@ -29,14 +29,14 @@ class App extends Component {
   }
 
   loadNewsFromServer() {
-    axios.get(this.props.url).then(res => {
+    axios.get(this.props.url + '/news').then(res => {
       this.setState({ data: res.data });
     });
   }
 
   componentDidMount() {
     this.loadNewsFromServer();
-    // setInterval(this.loadNewsFromServer, this.props.pollInterval);
+    setInterval(this.loadNewsFromServer, this.props.pollInterval);
   }
 
   render() {
@@ -54,7 +54,7 @@ class App extends Component {
           <Route path="/schedule" component={Schedule} />
           {/*<Route path="/admin" component={AdminPanel} />*/}
           <Route path="/admin" render={
-            props => (<AdminPanel apiPath={this.props.url} />
+            props => (<AdminPanel apiPath={this.props.url} data={this.state.data}/>
             )} />
         </div>
       </Router>
