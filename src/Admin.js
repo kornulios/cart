@@ -12,7 +12,7 @@ class AdminRow extends Component {
     return (
       <tr>
         <td>{this.props.text}</td>
-        <td><button onClick={this.showId.bind(this)}>Edit</button></td>
+        <td><button onClick={this.props.onEdit}>Edit</button></td>
         <td><button onClick={this.props.onDelete}>Delete</button></td>
       </tr>
     )
@@ -23,7 +23,7 @@ class AdminForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      newsText: 'Add new message',
+      newsText: this.props.newsText || 'Add new message',
       newsTitle: 'Message title'
     }
     this.handleChange = this.handleChange.bind(this);
@@ -31,11 +31,11 @@ class AdminForm extends Component {
   }
   handleSubmit(event) {
     event.preventDefault();
-    if(this.state.newsTitle === "" || this.state.newsText === "") {
+    if (this.state.newsTitle === "" || this.state.newsText === "") {
       return;
     }
-    this.props.OnSubmit({title: this.state.newsTitle, message: this.state.newsText});
-    this.setState({ newsTitle: 'Message title', newsText: 'Enter message'});
+    this.props.OnSubmit({ title: this.state.newsTitle, message: this.state.newsText });
+    this.setState({ newsTitle: 'Message title', newsText: 'Enter message' });
   }
 
   handleChange(event) {
@@ -77,6 +77,8 @@ class AdminPanel extends Component {
       drivers: [],
       view: 1,
       addNew: false,
+      editMessage: false,
+      editMessageId: '',
       submitSuccess: false
     }
     this.switchViewPanel = this.switchViewPanel.bind(this);
@@ -107,9 +109,13 @@ class AdminPanel extends Component {
     })
   }
 
-  // handleChange(event) {
-  //   this.setState({ [event.target.name]: event.target.value });
-  // }
+  handleNewsEdit(id) {
+    if (!id) {
+      this.setState({ editMessage: false, editMessageId: '' });
+      return;
+    }
+    this.setState({ editMessage: true, editMessageId: id });
+  }
 
   componentDidMount() {
     fetch('/api/drivers')
@@ -141,35 +147,47 @@ class AdminPanel extends Component {
 
     switch (this.state.view) {
       case 1:     //news admin
-        let newsList = this.state.addNew ? (<div></div>) : (<table>
+        let newsList = (<table>
           <thead>
             <tr>
               <th colSpan="3">News List</th>
             </tr>
           </thead>
           <tbody>
-            {this.props.data.map((item) => {
+            {this.props.data.map((item, index) => {
               return (<AdminRow
                 key={item._id}
                 _id={item._id}
                 text={item.title}
                 onDelete={this.handleNewsDelete.bind(this, item._id)}
+                onEdit={this.handleNewsEdit.bind(this, index)}
               />);
             })
             }
           </tbody>
         </table>);
+
         element = (
           <div>
             {this.state.addNew ? <AdminForm
               OnCancel={this.toggleAddNew.bind(this)}
               OnSubmit={this.handleNewsSubmit.bind(this)} />
               :
-              <button onClick={this.toggleAddNew}>Add new message</button>}
-
-            {newsList}
-            {this.state.submitSuccess ? <div>Form submitted successfully</div> : ""}
+              <div>
+                <button onClick={this.toggleAddNew}>Add new message</button>
+                {this.state.submitSuccess ? <div>Form submitted successfully</div> : ""}
+                {newsList}
+              </div>
+            }
           </div>);
+        if (this.state.editMessage) {
+          element = (<div>
+            <AdminForm
+              OnCancel={this.handleNewsEdit.bind(this, false)}
+              newsText={this.props.data[this.state.editMessageId].text}
+            />
+          </div>);
+        }
         break;
       case 2:         //drivers admin
         element = (<table className='admin-table'><tbody>{drivers}
