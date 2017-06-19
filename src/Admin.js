@@ -34,7 +34,6 @@ class AdminForm extends Component {
     if(this.state.newsTitle === "" || this.state.newsText === "") {
       return;
     }
-    console.log('submit handled');
     this.props.OnSubmit({title: this.state.newsTitle, message: this.state.newsText});
     this.setState({ newsTitle: 'Message title', newsText: 'Enter message'});
   }
@@ -83,8 +82,6 @@ class AdminPanel extends Component {
     this.switchViewPanel = this.switchViewPanel.bind(this);
     this.toggleAddNew = this.toggleAddNew.bind(this);
     this.handleNewsSubmit = this.handleNewsSubmit.bind(this);
-    // this.handleChange = this.handleChange.bind(this);
-    // this.handleNewsDelete = this.handleNewsDelete.bind(this);
   }
 
   switchViewPanel(newView) {
@@ -96,10 +93,7 @@ class AdminPanel extends Component {
   }
 
   handleNewsSubmit(data) {
-    // event.preventDefault();
-    // const message = data.newsText;
-    // const title = data.newsTitle;
-    axios.post('http://localhost:3001/api/news', { author: 'Admin', text: data.message, title: data.title })
+    axios.post(this.props.apiPath + '/news', { author: 'Admin', text: data.message, title: data.title })
       .then((res) => {
         console.log('Data saved');
         this.setState({ submitSuccess: true, addNew: false });
@@ -171,7 +165,7 @@ class AdminPanel extends Component {
               OnCancel={this.toggleAddNew.bind(this)}
               OnSubmit={this.handleNewsSubmit.bind(this)} />
               :
-              <button onClick={this.toggleAddNew}>Add new</button>}
+              <button onClick={this.toggleAddNew}>Add new message</button>}
 
             {newsList}
             {this.state.submitSuccess ? <div>Form submitted successfully</div> : ""}
