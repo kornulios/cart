@@ -110,7 +110,7 @@ class AdminPanel extends Component {
   }
 
   handleNewsEdit(id) {
-    if (!id) {
+    if (id === false) {
       this.setState({ editMessage: false, editMessageId: '' });
       return;
     }
