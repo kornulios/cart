@@ -134,13 +134,16 @@ class AdminPanel extends Component {
     this.setState({ editMessage: true, editMessageId: id });
   }
 
+  getPilotsList() {
+    fetch('/api/drivers')
+      .then(res => res.json())
+      .then(drivers => {
+        this.setState({ drivers })
+      })
+  }
+
   componentDidMount() {
-    console.log('component mounted');
-    // fetch('/api/drivers')
-    //   .then(res => res.json())
-    //   .then(drivers => {
-    //     this.setState({ drivers })
-    //   })
+    this.getPilotsList();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -150,25 +153,16 @@ class AdminPanel extends Component {
   }
 
   render() {
-    // console.log('admin component rendered');
     let element = (<div>Admin panel element</div>);
     const AdminNavBar = () => (
       <div className='admin-panel-left'>
         <ul>
           <li><a href='#' onClick={() => this.switchViewPanel(1)}>News</a></li>
-          <li><a href='#' onClick={() => this.switchViewPanel(2)}>Drivers</a></li>
+          <li><a href='#' onClick={() => this.switchViewPanel(2)}>Pilots</a></li>
           <li><a href='#' onClick={() => this.switchViewPanel(3)}>Schedules</a></li>
         </ul>
       </div>
     )
-    /*const drivers = this.state.drivers.map((val, id) => {
-      return (<tr key={val._id}>
-        <td>{val.name}</td>
-        <td><button>Edit</button></td>
-        <td><button>Delete</button></td>
-      </tr>
-      )
-    });*/
 
     switch (this.state.view) {
       case 1:     //news admin
@@ -202,7 +196,7 @@ class AdminPanel extends Component {
               <div>
                 <button onClick={this.toggleAddNew}>Add new message</button>
                 {this.state.submitSuccess ? <div>Form submitted successfully</div> : ""}
-                {!this.state.reloading ? <div>{newsList}</div>  : <div>Loading...</div>}
+                {!this.state.reloading ? <div>{newsList}</div> : <div>Loading...</div>}
               </div>
             }
           </div>);
@@ -220,12 +214,20 @@ class AdminPanel extends Component {
         break;
 
       //DRIVERS ADMIN
-      case 2:         
-        element = (<table className='admin-table'><tbody>
-          <tr>
-            <td><button>Add new</button></td>
-          </tr>
-        </tbody></table>);
+      case 2:
+        let drivers = (this.state.drivers ? this.state.drivers.map((val, id) => {
+          return (<AdminRow key={val._id} text={val.name} />)
+        }) : null);
+        
+        element = (<div>
+          <button>Add new pilot</button>
+          <table>
+            <thead><tr><th colSpan="3">Pilots roster</th></tr></thead>
+            <tbody>
+              {drivers}
+            </tbody>
+          </table>
+        </div>);
         break;
       case 3:
         break;

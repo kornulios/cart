@@ -40,7 +40,6 @@ class App extends Component {
   }
 
   render() {
-    // console.log('app component rendered');
     return (
       <Router>
         <div className='App' id='home'>
