@@ -24,17 +24,19 @@ class AdminForm extends Component {
     super(props);
     this.state = {
       newsText: this.props.newsText || 'Add new message',
-      newsTitle: 'Message title'
+      newsTitle: this.props.newsTitle || 'Message title',
+      uniqueId: this.props.uniqueId || null
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+
   handleSubmit(event) {
     event.preventDefault();
     if (this.state.newsTitle === "" || this.state.newsText === "") {
       return;
     }
-    this.props.OnSubmit({ title: this.state.newsTitle, message: this.state.newsText });
+    this.props.OnSubmit({ id: this.state.uniqueId, title: this.state.newsTitle, message: this.state.newsText });
     this.setState({ newsTitle: 'Message title', newsText: 'Enter message' });
   }
 
@@ -102,8 +104,18 @@ class AdminPanel extends Component {
       });
   }
 
+  handleNewsUpdate(data) {
+    axios.put(this.props.apiPath + '/news/' + data.id, { text: data.message, title: data.title })
+      .then((res) => {
+        console.log('Data updated id:', data.id);
+        this.setState({
+          editMessage: false,
+          editMessageId: ''
+        });
+      });
+  }
+
   handleNewsDelete(id) {
-    // console.log(this.props.apiPath + '/news/' + id);
     axios.delete(this.props.apiPath + '/news/' + id).then(res => {
       console.log('Id ' + id + ' deleted');
     })
@@ -166,7 +178,8 @@ class AdminPanel extends Component {
             }
           </tbody>
         </table>);
-
+        
+        //Create base element -- to refactor
         element = (
           <div>
             {this.state.addNew ? <AdminForm
@@ -180,16 +193,21 @@ class AdminPanel extends Component {
               </div>
             }
           </div>);
-        if (this.state.editMessage) {
+        if (this.state.editMessage) {     //EDIT MESSAGE 
           element = (<div>
             <AdminForm
               OnCancel={this.handleNewsEdit.bind(this, false)}
+              OnSubmit={this.handleNewsUpdate.bind(this)}
+              uniqueId={this.props.data[this.state.editMessageId]._id}
               newsText={this.props.data[this.state.editMessageId].text}
+              newsTitle={this.props.data[this.state.editMessageId].title}
             />
           </div>);
         }
         break;
-      case 2:         //drivers admin
+
+      //DRIVERS ADMIN
+      case 2:         
         element = (<table className='admin-table'><tbody>{drivers}
           <tr>
             <td><button>Add new</button></td>
