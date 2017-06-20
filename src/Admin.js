@@ -75,13 +75,14 @@ class AdminPanel extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      news: [],
-      drivers: [],
+      // news: [],
+      // drivers: [],
       view: 1,
       addNew: false,
       editMessage: false,
       editMessageId: '',
-      submitSuccess: false
+      submitSuccess: false,
+      reloading: false
     }
     this.switchViewPanel = this.switchViewPanel.bind(this);
     this.toggleAddNew = this.toggleAddNew.bind(this);
@@ -100,7 +101,7 @@ class AdminPanel extends Component {
     axios.post(this.props.apiPath + '/news', { author: 'Admin', text: data.message, title: data.title })
       .then((res) => {
         console.log('Data saved');
-        this.setState({ submitSuccess: true, addNew: false });
+        this.setState({ submitSuccess: true, addNew: false, reloading: true });
       });
   }
 
@@ -110,7 +111,8 @@ class AdminPanel extends Component {
         console.log('Data updated id:', data.id);
         this.setState({
           editMessage: false,
-          editMessageId: ''
+          editMessageId: '',
+          reloading: true
         });
       });
   }
@@ -118,6 +120,9 @@ class AdminPanel extends Component {
   handleNewsDelete(id) {
     axios.delete(this.props.apiPath + '/news/' + id).then(res => {
       console.log('Id ' + id + ' deleted');
+      this.setState({
+        reloading: true
+      });
     })
   }
 
@@ -130,14 +135,22 @@ class AdminPanel extends Component {
   }
 
   componentDidMount() {
-    fetch('/api/drivers')
-      .then(res => res.json())
-      .then(drivers => {
-        this.setState({ drivers })
-      })
+    console.log('component mounted');
+    // fetch('/api/drivers')
+    //   .then(res => res.json())
+    //   .then(drivers => {
+    //     this.setState({ drivers })
+    //   })
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      reloading: false
+    });
   }
 
   render() {
+    // console.log('admin component rendered');
     let element = (<div>Admin panel element</div>);
     const AdminNavBar = () => (
       <div className='admin-panel-left'>
@@ -148,14 +161,14 @@ class AdminPanel extends Component {
         </ul>
       </div>
     )
-    const drivers = this.state.drivers.map((val, id) => {
+    /*const drivers = this.state.drivers.map((val, id) => {
       return (<tr key={val._id}>
         <td>{val.name}</td>
         <td><button>Edit</button></td>
         <td><button>Delete</button></td>
       </tr>
       )
-    });
+    });*/
 
     switch (this.state.view) {
       case 1:     //news admin
@@ -178,7 +191,7 @@ class AdminPanel extends Component {
             }
           </tbody>
         </table>);
-        
+
         //Create base element -- to refactor
         element = (
           <div>
@@ -189,7 +202,7 @@ class AdminPanel extends Component {
               <div>
                 <button onClick={this.toggleAddNew}>Add new message</button>
                 {this.state.submitSuccess ? <div>Form submitted successfully</div> : ""}
-                {newsList}
+                {!this.state.reloading ? <div>{newsList}</div>  : <div>Loading...</div>}
               </div>
             }
           </div>);
@@ -208,7 +221,7 @@ class AdminPanel extends Component {
 
       //DRIVERS ADMIN
       case 2:         
-        element = (<table className='admin-table'><tbody>{drivers}
+        element = (<table className='admin-table'><tbody>
           <tr>
             <td><button>Add new</button></td>
           </tr>

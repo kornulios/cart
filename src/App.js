@@ -40,6 +40,7 @@ class App extends Component {
   }
 
   render() {
+    // console.log('app component rendered');
     return (
       <Router>
         <div className='App' id='home'>
@@ -52,9 +53,9 @@ class App extends Component {
             </div>
           )} />
           <Route path="/schedule" component={Schedule} />
-          {/*<Route path="/admin" component={AdminPanel} />*/}
+          
           <Route path="/admin" render={
-            props => (<AdminPanel apiPath={this.props.url} data={this.state.data}/>
+            props => (<AdminPanel apiPath={this.props.url} data={this.state.data} isLoading={false}/>
             )} />
         </div>
       </Router>
