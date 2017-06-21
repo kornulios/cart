@@ -83,7 +83,15 @@ router.route('/drivers').get(
       res.json(drivers);
     })
   }
-);
+).post(
+  (req, res) => {
+    let newDriver = new Drivers();
+    newDriver.name = req.body.name;
+    newDriver.save(err => {
+      if (err) res.send(err);
+      res.json({ message: 'New driver added' });
+    });
+  });
 
 router.route('/drivers/:driver_id').delete(
   (req, res) => {
@@ -94,11 +102,11 @@ router.route('/drivers/:driver_id').delete(
   }
 );
 
-    //comment modified
-    app.use('/api', router);
+//comment modified
+app.use('/api', router);
 
-    app.listen(port, function () {
-      console.log('api running on port ' + port);
-    });
+app.listen(port, function () {
+  console.log('api running on port ' + port);
+});
 
 //mode comms

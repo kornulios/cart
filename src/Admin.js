@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 class AdminRow extends Component {
-  // constructor(props) {
-  //   super(props);
-  // }
   showId() {
     console.log(this.props._id);
   }
@@ -12,10 +9,37 @@ class AdminRow extends Component {
     return (
       <tr>
         <td>{this.props.text}</td>
-        <td><button onClick={this.props.onEdit}>Edit</button></td>
+        <td><button onClick={this.props.onEdit} disabled={this.props.editDisabled}>Edit</button></td>
         <td><button onClick={this.props.onDelete}>Delete</button></td>
       </tr>
     )
+  }
+}
+
+class PilotForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      driverName: ''
+    }
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({ driverName: event.target.value });
+  }
+
+  submitNewPilot() {
+    if (this.state.driverName !== '')
+      this.props.onOk(this.state.driverName);
+  }
+
+  render() {
+    return (<div>
+      <input type='text' value={this.state.driverName} onChange={this.handleChange} />
+      <button onClick={this.submitNewPilot.bind(this)}>Ok</button>
+      <button onClick={this.props.onCancel}>Cancel</button>
+    </div>);
   }
 }
 
@@ -75,8 +99,6 @@ class AdminPanel extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // news: [],
-      // drivers: [],
       view: 1,
       addNew: false,
       editMessage: false,
@@ -87,10 +109,12 @@ class AdminPanel extends Component {
     this.switchViewPanel = this.switchViewPanel.bind(this);
     this.toggleAddNew = this.toggleAddNew.bind(this);
     this.handleNewsSubmit = this.handleNewsSubmit.bind(this);
+    this.handleAddPilot = this.handleAddPilot.bind(this);
+    this.handleDeletePilot = this.handleDeletePilot.bind(this);
   }
 
   switchViewPanel(newView) {
-    this.setState({ view: newView });
+    this.setState({ view: newView, addNew: false, editMessage: false, editMessageId: '' });
   }
 
   toggleAddNew() {
@@ -132,6 +156,21 @@ class AdminPanel extends Component {
       return;
     }
     this.setState({ editMessage: true, editMessageId: id });
+  }
+
+  handleAddPilot(name) {
+    axios.post(this.props.apiPath + '/drivers', { name: name }).then(res => {
+      console.log(res.data.message);
+      this.getPilotsList();
+      this.setState({ addNew: false });
+    });
+  }
+
+  handleDeletePilot(id) {
+    axios.delete(this.props.apiPath + '/drivers/' + id).then(res => {
+      console.log('Driver ' + id + ' deleted');
+      this.getPilotsList();
+    });
   }
 
   getPilotsList() {
@@ -216,11 +255,15 @@ class AdminPanel extends Component {
       //DRIVERS ADMIN
       case 2:
         let drivers = (this.state.drivers ? this.state.drivers.map((val, id) => {
-          return (<AdminRow key={val._id} text={val.name} />)
+          return (<AdminRow key={val._id} text={val.name} onDelete={this.handleDeletePilot.bind(this, val._id)} editDisabled={true} />)
         }) : null);
-        
+
         element = (<div>
-          <button>Add new pilot</button>
+          <button onClick={this.toggleAddNew}>Add new pilot</button>
+          {this.state.addNew ? <div>
+            <PilotForm onCancel={this.toggleAddNew} onOk={this.handleAddPilot} />
+          </div>
+            : ""}
           <table>
             <thead><tr><th colSpan="3">Pilots roster</th></tr></thead>
             <tbody>
@@ -246,5 +289,6 @@ class AdminPanel extends Component {
     )
   }
 }
+
 
 export default AdminPanel;
