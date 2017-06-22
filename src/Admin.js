@@ -121,11 +121,20 @@ class AdminPanel extends Component {
     this.setState({ addNew: !this.state.addNew, submitSuccess: false });
   }
 
+  toggleNewsEdit(id) {
+    if (id === false) {
+      this.setState({ editMessage: false, editMessageId: '' });
+      return;
+    }
+    this.setState({ editMessage: true, editMessageId: id });
+  }
+
   handleNewsSubmit(data) {
     axios.post(this.props.apiPath + '/news', { author: 'Admin', text: data.message, title: data.title })
       .then((res) => {
         console.log('Data saved');
         this.setState({ submitSuccess: true, addNew: false, reloading: true });
+        this.props.onUpdate();
       });
   }
 
@@ -138,6 +147,7 @@ class AdminPanel extends Component {
           editMessageId: '',
           reloading: true
         });
+        this.props.onUpdate();
       });
   }
 
@@ -147,16 +157,11 @@ class AdminPanel extends Component {
       this.setState({
         reloading: true
       });
+      this.props.onUpdate();
     })
   }
 
-  handleNewsEdit(id) {
-    if (id === false) {
-      this.setState({ editMessage: false, editMessageId: '' });
-      return;
-    }
-    this.setState({ editMessage: true, editMessageId: id });
-  }
+  
 
   handleAddPilot(name) {
     axios.post(this.props.apiPath + '/drivers', { name: name }).then(res => {
@@ -218,7 +223,7 @@ class AdminPanel extends Component {
                 _id={item._id}
                 text={item.title}
                 onDelete={this.handleNewsDelete.bind(this, item._id)}
-                onEdit={this.handleNewsEdit.bind(this, index)}
+                onEdit={this.toggleNewsEdit.bind(this, index)}
               />);
             })
             }
@@ -242,7 +247,7 @@ class AdminPanel extends Component {
         if (this.state.editMessage) {     //EDIT MESSAGE 
           element = (<div>
             <AdminForm
-              OnCancel={this.handleNewsEdit.bind(this, false)}
+              OnCancel={this.toggleNewsEdit.bind(this, false)}
               OnSubmit={this.handleNewsUpdate.bind(this)}
               uniqueId={this.props.data[this.state.editMessageId]._id}
               newsText={this.props.data[this.state.editMessageId].text}

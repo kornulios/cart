@@ -36,7 +36,7 @@ class App extends Component {
 
   componentDidMount() {
     this.loadNewsFromServer();
-    setInterval(this.loadNewsFromServer, this.props.pollInterval);
+    // setInterval(this.loadNewsFromServer, this.props.pollInterval);
   }
 
   render() {
@@ -54,7 +54,7 @@ class App extends Component {
           <Route path="/schedule" component={Schedule} />
           
           <Route path="/admin" render={
-            props => (<AdminPanel apiPath={this.props.url} data={this.state.data} isLoading={false}/>
+            props => (<AdminPanel apiPath={this.props.url} data={this.state.data} onUpdate={this.loadNewsFromServer} />
             )} />
         </div>
       </Router>

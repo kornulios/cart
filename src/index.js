@@ -6,9 +6,8 @@ import App from './App';
 // console.log(process.env.NODE_ENV);
 
 ReactDOM.render(
-  <App 
-   url='/api'
-   pollInterval={2000}
+  <App
+    url='/api'
   />,
   document.getElementById('root')
 );
