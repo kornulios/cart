@@ -161,7 +161,7 @@ class AdminPanel extends Component {
     })
   }
 
-  
+
 
   handleAddPilot(name) {
     axios.post(this.props.apiPath + '/drivers', { name: name }).then(res => {
@@ -179,11 +179,10 @@ class AdminPanel extends Component {
   }
 
   getPilotsList() {
-    fetch('/api/drivers')
-      .then(res => res.json())
-      .then(drivers => {
-        this.setState({ drivers })
-      })
+    axios.get( this.props.apiPath + '/drivers')
+      .then(res => {
+        this.setState({ drivers: res.data });
+      });
   }
 
   componentDidMount() {
