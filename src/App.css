@@ -52,6 +52,10 @@ ul {
   margin-bottom: 8px;
 }
 
+.newsbox em {
+  font-size: small;
+}
+
 .newsbox > h3 {
   margin: 0;
   background: lightgray;
