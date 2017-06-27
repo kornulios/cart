@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var News = require('./model/news');
 var Drivers = require('./model/drivers');
+var Races = require('./model/races');
 
 
 var app = express();
@@ -98,6 +99,15 @@ router.route('/drivers/:driver_id').delete(
     Drivers.remove({ _id: req.params.driver_id }, (err, drivers) => {
       if (err) res.send(err);
       res.json({ message: 'Driver has been deleted' })
+    });
+  }
+);
+
+router.route('/races').get(
+  (req, res) => {
+    Races.find((err, races) => {
+      if (err) res.send(err);
+      res.json(races);
     });
   }
 );

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { RacesAdmin } from './RacesBox';
 import axios from 'axios';
 
 class AdminRow extends Component {
@@ -276,7 +277,9 @@ class AdminPanel extends Component {
           </table>
         </div>);
         break;
+      //RACES ADMIN
       case 3:
+        element = (<RacesAdmin mode='admin' apiPath={this.props.apiPath} />);
         break;
       default:
         break;
