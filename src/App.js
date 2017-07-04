@@ -51,6 +51,11 @@ class App extends Component {
             </div>
           )} />
           <Route path="/schedule" component={Schedule} />
+          <Route path="/table" render={props => (
+            <div>
+              <DriversBox type='results' />
+              </div>
+          )} />
           
           <Route path="/admin" render={
             props => (<AdminPanel apiPath={this.props.url} data={this.state.data} onUpdate={this.loadNewsFromServer} />

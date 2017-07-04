@@ -97,9 +97,9 @@ router.route('/drivers').get(
           for (var j = 0; j < raceResults.length; j++) {
             if (raceResults[j].results.indexOf(id) > -1) {
               pt += (POINTS[raceResults[j].results.indexOf(id)] ? POINTS[raceResults[j].results.indexOf(id)] : 0);
-              pp.push(pt);
+              pp.push((POINTS[raceResults[j].results.indexOf(id)] ? POINTS[raceResults[j].results.indexOf(id)] : 0));
             } else {
-              pp.push('NP');
+              pp.push('-');
             }
           }
           driver.total = pt;
