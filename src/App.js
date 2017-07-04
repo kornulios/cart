@@ -5,7 +5,7 @@ import Menu from './Menu';
 import NewsBox from './NewsBox';
 import DriversBox from './DriversBox';
 import AdminPanel from './Admin';
-import './App.css';
+import './styles/App.css';
 
 const Header = () => (
   <div className='App-header'>
@@ -36,7 +36,6 @@ class App extends Component {
 
   componentDidMount() {
     this.loadNewsFromServer();
-    // setInterval(this.loadNewsFromServer, this.props.pollInterval);
   }
 
   render() {
