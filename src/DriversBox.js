@@ -32,7 +32,7 @@ class DriversBox extends Component {
       return (<tr key={val._id}>
         <td>{index+1}</td>
         <td>{val.name}</td>
-        <td>0</td>
+        <td>{val.points}</td>
       </tr>)
     });
 

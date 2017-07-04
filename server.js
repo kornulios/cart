@@ -6,13 +6,15 @@ var News = require('./model/news');
 var Drivers = require('./model/drivers');
 var Races = require('./model/races');
 
-
 var app = express();
 var router = express.Router();
 
 var port = process.env.API_PORT || 3001;
 
-console.log(process.env.NODE_ENV);
+//app specific
+const POINTS = [10, 6, 4, 3, 2, 1];
+
+//console.log(process.env.NODE_ENV);
 
 //db config
 mongoose.connect('mongodb://admin:admin@ds151451.mlab.com:51451/lux-cart');
@@ -80,8 +82,33 @@ router.route('/news/:news_id')
 router.route('/drivers').get(
   (req, res) => {
     Drivers.find((err, drivers) => {
+      Races.find((err, races) => {
+        var raceResults = races.filter((race, i) => {
+          if (race.results.length > 0) return true;
+          return false;
+        });
+
+        //prepare drivers points
+        drivers.forEach((driver, i) => {
+          var pt = 0;
+          var id = driver._id.toString();
+          for (var j = 0; j < raceResults.length; j++) {
+            if (raceResults[j].results.indexOf(id) > -1) {
+              pt += (POINTS[raceResults[j].results.indexOf(id)] ? POINTS[raceResults[j].results.indexOf(id)] : 0 );
+            }
+          }
+          driver.points = pt;
+          console.log(driver._id, driver.name, driver.points);
+        });
+
+        drivers.sort((a, b) => {
+          return b.points - a.points;
+        });
+
+        res.json(drivers);
+      });
       if (err) res.send(err);
-      res.json(drivers);
+      
     })
   }
 ).post(
@@ -111,6 +138,16 @@ router.route('/races').get(
     });
   }
 );
+
+router.route('/races/:race_id').get(
+  (req, res) => {
+    Races.find({ _id: req.params.race_id }, (err, races) => {
+      if (err) res.send(err);
+      res.json(races);
+    });
+  }
+);
+
 
 //comment modified
 app.use('/api', router);

@@ -39,8 +39,6 @@ class NewsBox extends Component {
       ))
     ) : (<div>Loading...</div>);
 
-    // const newsNodes = (<div>Hello</div>);
-
     return (
       <div className='news-container fx-item'>
         <div className=''>
