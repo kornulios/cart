@@ -27,25 +27,35 @@ class DriversBox extends Component {
         </tr>
       </thead>
     );
-    
-    const ed = this.state.drivers.map((val, index) => {
-      return (<tr key={val._id}>
-        <td>{index+1}</td>
-        <td>{val.name}</td>
-        <td>{val.total}</td>
-      </tr>)
-    });
 
-    return (
+    let elem = "";
+
+    switch (this.props.type) {
+      case 'totals':
+        elem = this.state.drivers.map((val, index) => {
+          return (<tr key={val._id}>
+            <td>{index + 1}</td>
+            <td>{val.name}</td>
+            <td>{val.total}</td>
+          </tr>)
+        });
+        break;
+      default:
+        elem = ( <p>WARNING: Invalid driver box selected</p> );
+        break; 
+    }
+  
+
+  return(
       <div className='drivers-container fx-item'>
-        <h2>Standings:</h2>
-        <table>
-          {headers}
-          <tbody>
-            {ed}
-          </tbody>
-        </table>
-      </div>
+  <h2>Standings:</h2>
+  <table>
+    {headers}
+    <tbody>
+      {elem}
+    </tbody>
+  </table>
+</div>
     );
   }
 }

@@ -47,7 +47,7 @@ class App extends Component {
           <Route path="/" exact={true} render={props => (
             <div className='fx-container'>
               <NewsBox data={this.state.data} />
-              <DriversBox />
+              <DriversBox type="totals" />
             </div>
           )} />
           <Route path="/schedule" component={Schedule} />
