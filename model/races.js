@@ -5,7 +5,7 @@ var RacesSchema = new Schema({
   name: String,
   date: String,
   location: String,
-  results: Object
+  results: []
 });
 
 module.exports = mongoose.model('Races', RacesSchema);

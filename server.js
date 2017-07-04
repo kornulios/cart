@@ -82,6 +82,7 @@ router.route('/news/:news_id')
 router.route('/drivers').get(
   (req, res) => {
     Drivers.find((err, drivers) => {
+      if (err) res.send(err);
       Races.find((err, races) => {
         var raceResults = races.filter((race, i) => {
           if (race.results.length > 0) return true;
@@ -91,25 +92,28 @@ router.route('/drivers').get(
         //prepare drivers points
         drivers.forEach((driver, i) => {
           var pt = 0;
+          var pp = [];
           var id = driver._id.toString();
           for (var j = 0; j < raceResults.length; j++) {
             if (raceResults[j].results.indexOf(id) > -1) {
-              pt += (POINTS[raceResults[j].results.indexOf(id)] ? POINTS[raceResults[j].results.indexOf(id)] : 0 );
+              pt += (POINTS[raceResults[j].results.indexOf(id)] ? POINTS[raceResults[j].results.indexOf(id)] : 0);
+              pp.push(pt);
+            } else {
+              pp.push('NP');
             }
           }
-          driver.points = pt;
-          console.log(driver._id, driver.name, driver.points);
+          driver.total = pt;
+          driver.points = pp;
         });
 
         drivers.sort((a, b) => {
-          return b.points - a.points;
+          return b.total - a.total;
         });
 
         res.json(drivers);
+
       });
-      if (err) res.send(err);
-      
-    })
+    });
   }
 ).post(
   (req, res) => {

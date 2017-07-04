@@ -21,7 +21,7 @@ class RacesAdmin extends Component {
 
   render() {
     let racesData = (this.state.races ? this.state.races.map(val => {
-      return (<p key={val._id}>{val.name}</p>)
+      return (<p key={val._id}>{val.name} date: {val.date}</p>)
     }) : "No races");
 
     return (
