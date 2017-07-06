@@ -9,6 +9,7 @@ class AdminRow extends Component {
   render() {
     return (
       <tr>
+        <td width="80px">{this.props._id}</td>
         <td>{this.props.text}</td>
         <td><button onClick={this.props.onEdit} disabled={this.props.editDisabled}>Edit</button></td>
         <td><button onClick={this.props.onDelete}>Delete</button></td>
@@ -180,7 +181,7 @@ class AdminPanel extends Component {
   }
 
   getPilotsList() {
-    axios.get( this.props.apiPath + '/drivers')
+    axios.get(this.props.apiPath + '/drivers')
       .then(res => {
         this.setState({ drivers: res.data });
       });
@@ -213,7 +214,7 @@ class AdminPanel extends Component {
         let newsList = (<table>
           <thead>
             <tr>
-              <th colSpan="3">News List</th>
+              <th colSpan="4">News List</th>
             </tr>
           </thead>
           <tbody>
@@ -260,7 +261,12 @@ class AdminPanel extends Component {
       //DRIVERS ADMIN
       case 2:
         let drivers = (this.state.drivers ? this.state.drivers.map((val, id) => {
-          return (<AdminRow key={val._id} text={val.name} onDelete={this.handleDeletePilot.bind(this, val._id)} editDisabled={true} />)
+          return (<AdminRow
+            key={val._id}
+            _id={val._id}
+            text={val.name}
+            onDelete={this.handleDeletePilot.bind(this, val._id)}
+            editDisabled={true} />)
         }) : null);
 
         element = (<div>
@@ -270,7 +276,7 @@ class AdminPanel extends Component {
           </div>
             : ""}
           <table>
-            <thead><tr><th colSpan="3">Pilots roster</th></tr></thead>
+            <thead><tr><th colSpan="4">Pilots roster</th></tr></thead>
             <tbody>
               {drivers}
             </tbody>
