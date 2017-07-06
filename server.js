@@ -138,6 +138,11 @@ router.route('/races').get(
   (req, res) => {
     Races.find((err, races) => {
       if (err) res.send(err);
+      races.sort((a, b) => {
+        a = new Date(a.date);
+        b = new Date(b.date);
+        return a>b ? 1 : a<b ? -1 : 0;
+      })
       res.json(races);
     });
   }
