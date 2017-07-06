@@ -45,7 +45,7 @@ const RaceBox = (props) => {
     <div>
       <table className='races-table'>
         <thead>
-        <th colSpan="2"><td>{props.name}</td></th>
+        <tr><th colSpan="2">{props.name}</th></tr>
         </thead>
         <tbody>
         <tr>
