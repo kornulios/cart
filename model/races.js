@@ -3,7 +3,8 @@ var Schema = mongoose.Schema;
 
 var RacesSchema = new Schema({
   name: String,
-  date: String,
+  date: Date,
+  time: String,
   location: String,
   results: []
 });

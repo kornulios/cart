@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-class RacesAdmin extends Component {
+class RacesBox extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -10,8 +10,8 @@ class RacesAdmin extends Component {
   getAllRaces() {
     axios.get(this.props.apiPath + '/races')
       .then(res => {
-        this.setState({ races: res.data });
-        console.log(this.state.races);
+        this.setState({ races: res.data, type: this.props.type });
+        //console.log(this.state.races);
       });
   }
 
@@ -21,8 +21,15 @@ class RacesAdmin extends Component {
 
   render() {
     let racesData = (this.state.races ? this.state.races.map(val => {
-      return (<p key={val._id}>{val.name} date: {val.date}</p>)
-    }) : "No races");
+      return (
+        <RaceBox
+          key={val._id}
+          date={val.date.substr(0, 10)}
+          name={val.name}
+          location={val.location}
+        />
+        )
+    }) : "Loading races...");
 
     return (
       <div>
@@ -33,4 +40,22 @@ class RacesAdmin extends Component {
 
 }
 
-export { RacesAdmin };
+const RaceBox = (props) => {
+  return (
+    <div>
+      <table className='races-table'>
+        <thead>
+        <th colSpan="2"><td>{props.name}</td></th>
+        </thead>
+        <tbody>
+        <tr>
+          <td>Date: {props.date}</td>
+          <td>Location: {props.location}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+export { RacesBox };
