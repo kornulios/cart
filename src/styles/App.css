@@ -143,15 +143,15 @@ label {
 .races-table {
   width: 60%;
   margin: 30px auto;
-  border: 1px solid lightcoral;
+  border: 1px solid #ff5b4c;
 }
 
 .races-table thead {
-  background: lightcoral;
+  background: #ff5b4c;
 }
 
 .races-table td {
-  border: 1px solid lightcoral;
+  border: 1px solid #ff5b4c;
 }
 
 .races-box {
