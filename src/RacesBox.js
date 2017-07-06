@@ -21,13 +21,17 @@ class RacesBox extends Component {
 
   toggleRaceResult(raceId) {
     if (!raceId) return 0;
-    this.setState({ showResult: raceId });
+    if (raceId === this.state.showResult) {
+      this.setState({ showResult: null })
+    } else {
+      this.setState({ showResult: raceId });
+    }
   }
 
   findPilotName(pilotId) {
-    let  pilots = this.state.drivers.data;
-    for (var i=0; i<pilots.length; i++) {
-      if ( pilots[i]._id == pilotId ) {
+    let pilots = this.state.drivers.data;
+    for (var i = 0; i < pilots.length; i++) {
+      if (pilots[i]._id == pilotId) {
         return pilots[i].name;
       }
     }
