@@ -153,3 +153,7 @@ label {
 .races-table td {
   border: 1px solid lightsalmon;
 }
+
+.races-box {
+  padding-bottom: 50px;
+}

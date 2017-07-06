@@ -32,7 +32,7 @@ class RacesBox extends Component {
     }) : "Loading races...");
 
     return (
-      <div>
+      <div className='races-box'>
         {racesData}
       </div>
     );
@@ -49,11 +49,19 @@ const RaceBox = (props) => {
         </thead>
         <tbody>
           <tr>
-            <td>Date: {props.date}</td>
+            <td>Date: {props.date} Time: TBI</td>
             <td>Location: {props.location}</td>
           </tr>
+          <tr>
+            <td colSpan={2}>
+              <button>Sign-up</button>
+              <button>Results</button>
+            </td>
+          </tr>
         </tbody>
+
       </table>
+
     </div>
   );
 }

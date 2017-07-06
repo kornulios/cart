@@ -54,7 +54,8 @@ class App extends Component {
           )} />
 
           <Route path="/schedule" render={props => (
-            <RacesBox apiPath={this.props.url} />
+            <RacesBox
+              apiPath={this.props.url} />
           )} />
 
           <Route path="/table" render={props => (
@@ -63,9 +64,12 @@ class App extends Component {
             </div>
           )} />
 
-          <Route path="/admin" render={
-            props => (<AdminPanel apiPath={this.props.url} data={this.state.data} onUpdate={this.loadNewsFromServer} />
-            )} />
+          <Route path="/admin" render={props => (
+            <AdminPanel
+              apiPath={this.props.url}
+              data={this.state.data}
+              onUpdate={this.loadNewsFromServer} />
+          )} />
         </div>
       </Router>
     );
