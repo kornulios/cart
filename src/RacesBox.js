@@ -26,6 +26,8 @@ class RacesBox extends Component {
           key={val._id}
           date={val.date.substr(0, 10)}
           name={val.name}
+          time={val.time}
+          results={val.results.length > 0 ? val.results : false}
           location={val.location}
         />
       )
@@ -49,13 +51,13 @@ const RaceBox = (props) => {
         </thead>
         <tbody>
           <tr>
-            <td>Date: {props.date} Time: TBI</td>
+            <td>Date: {props.date} Time: {props.time}</td>
             <td>Location: {props.location}</td>
           </tr>
           <tr>
             <td colSpan={2}>
-              <button>Sign-up</button>
-              <button>Results</button>
+              <button disabled={props.results}>Sign-up</button>
+              <button disabled={!props.results}>Results</button>
             </td>
           </tr>
         </tbody>
