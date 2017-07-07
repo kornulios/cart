@@ -31,7 +31,7 @@ class RacesBox extends Component {
   findPilotName(pilotId) {
     let pilots = this.state.drivers.data;
     for (var i = 0; i < pilots.length; i++) {
-      if (pilots[i]._id == pilotId) {
+      if (pilots[i]._id === pilotId) {
         return pilots[i].name;
       }
     }
@@ -54,7 +54,7 @@ class RacesBox extends Component {
           name={val.name}
           time={val.time}
           results={myResults}
-          showResult={val._id == this.state.showResult ? true : false}
+          showResult={val._id === this.state.showResult ? true : false}
           location={val.location}
           onDisplayResult={this.toggleRaceResult.bind(this, val._id)}
         />

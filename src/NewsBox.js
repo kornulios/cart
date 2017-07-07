@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 class NewsBox extends Component {
   constructor(props) {
     super(props);
     this.state = {
       currentPage: 1,
-      newsPerPage: 6
+      newsPerPage: 6,
+      data: []
     }
     this.showNextPage = this.showNextPage.bind(this);
     this.showPrevPage = this.showPrevPage.bind(this);
+    this.loadNews = this.loadNews.bind(this);
   }
 
   showNextPage(e) {
@@ -24,12 +27,22 @@ class NewsBox extends Component {
     if (this.state.currentPage > 1) this.setState({ currentPage: this.state.currentPage - 1 });
   }
 
+  loadNews() {
+    axios.get(this.props.apiPath + '/news').then(res => {
+      this.setState({ data: res.data });
+    });
+  }
+
+  componentDidMount() {
+    this.loadNews();
+  }
+
   render() {
     const lastNews = this.state.currentPage * this.state.newsPerPage;
     const firstNews = lastNews - this.state.newsPerPage;
-    const currentNews = this.props.data.slice(firstNews, lastNews);
+    const currentNews = this.state.data.slice(firstNews, lastNews);
 
-    const newsNodes = ( this.props.data.length > 0 ) ? (currentNews.map(item =>
+    const newsNodes = (this.state.data.length > 0) ? (currentNews.map(item =>
       (
         <div className='newsbox' key={item._id}>
           <h3>{item.title}</h3>

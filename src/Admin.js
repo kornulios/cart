@@ -101,6 +101,7 @@ class AdminPanel extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      news: [],
       view: 1,
       addNew: false,
       editMessage: false,
@@ -187,7 +188,15 @@ class AdminPanel extends Component {
       });
   }
 
+  getNewsList() {
+    axios.get(this.props.apiPath + '/news')
+      .then(res => {
+        this.setState({ news: res.data });
+      });
+  }
+
   componentDidMount() {
+    this.getNewsList();
     this.getPilotsList();
   }
 
@@ -218,7 +227,7 @@ class AdminPanel extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.props.data.map((item, index) => {
+            {this.state.news.map((item, index) => {
               return (<AdminRow
                 key={item._id}
                 _id={item._id}

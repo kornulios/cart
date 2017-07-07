@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import axios from 'axios';
+
 import Menu from './Menu';
 import NewsBox from './NewsBox';
 import DriversBox from './DriversBox';
@@ -14,11 +14,6 @@ const Header = () => (
   </div>
 )
 
-// const RacesBox = (props) => (
-//   <div>
-//     <p>Hello schedule!</p>
-//   </div>
-// )
 
 class App extends Component {
   constructor(props) {
@@ -26,18 +21,10 @@ class App extends Component {
     this.state = {
       data: []
     };
-    this.loadNewsFromServer = this.loadNewsFromServer.bind(this);
+    //this.loadNewsFromServer = this.loadNewsFromServer.bind(this);
   }
 
-  loadNewsFromServer() {
-    axios.get(this.props.url + '/news').then(res => {
-      this.setState({ data: res.data });
-    });
-  }
-
-  componentDidMount() {
-    this.loadNewsFromServer();
-  }
+  
 
   render() {
     return (
@@ -48,7 +35,7 @@ class App extends Component {
 
           <Route path="/" exact={true} render={props => (
             <div className='fx-container'>
-              <NewsBox data={this.state.data} />
+              <NewsBox apiPath={this.props.url} />
               <DriversBox type="totals" />
             </div>
           )} />
@@ -67,7 +54,6 @@ class App extends Component {
           <Route path="/admin" render={props => (
             <AdminPanel
               apiPath={this.props.url}
-              data={this.state.data}
               onUpdate={this.loadNewsFromServer} />
           )} />
         </div>
