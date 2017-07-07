@@ -137,7 +137,7 @@ class AdminPanel extends Component {
       .then((res) => {
         console.log('Data saved');
         this.setState({ submitSuccess: true, addNew: false, reloading: true });
-        this.props.onUpdate();
+        this.getNewsList();
       });
   }
 
@@ -150,7 +150,7 @@ class AdminPanel extends Component {
           editMessageId: '',
           reloading: true
         });
-        this.props.onUpdate();
+        this.getNewsList();
       });
   }
 
@@ -160,11 +160,10 @@ class AdminPanel extends Component {
       this.setState({
         reloading: true
       });
-      this.props.onUpdate();
+      // this.props.onUpdate();
+      this.getNewsList();
     })
   }
-
-
 
   handleAddPilot(name) {
     axios.post(this.props.apiPath + '/drivers', { name: name }).then(res => {
@@ -191,7 +190,7 @@ class AdminPanel extends Component {
   getNewsList() {
     axios.get(this.props.apiPath + '/news')
       .then(res => {
-        this.setState({ news: res.data });
+        this.setState({ news: res.data, reloading: false });
       });
   }
 
