@@ -21,7 +21,6 @@ class App extends Component {
     this.state = {
       data: []
     };
-    //this.loadNewsFromServer = this.loadNewsFromServer.bind(this);
   }
 
   
