@@ -14,7 +14,6 @@ const Header = () => (
   </div>
 )
 
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -22,8 +21,6 @@ class App extends Component {
       data: []
     };
   }
-
-  
 
   render() {
     return (
