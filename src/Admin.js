@@ -258,9 +258,9 @@ class AdminPanel extends Component {
             <AdminForm
               OnCancel={this.toggleNewsEdit.bind(this, false)}
               OnSubmit={this.handleNewsUpdate.bind(this)}
-              uniqueId={this.props.data[this.state.editMessageId]._id}
-              newsText={this.props.data[this.state.editMessageId].text}
-              newsTitle={this.props.data[this.state.editMessageId].title}
+              uniqueId={this.state.news[this.state.editMessageId]._id}
+              newsText={this.state.news[this.state.editMessageId].text}
+              newsTitle={this.state.news[this.state.editMessageId].title}
             />
           </div>);
         }
