@@ -46,7 +46,7 @@ class NewsBox extends Component {
       (
         <div className='newsbox' key={item._id}>
           <h3>{item.title}</h3>
-          <p>{item.text}</p>
+          <div><MultiLine text={item.text} /></div>
           <em>by {item.author}</em>
         </div>
       ))
@@ -66,6 +66,13 @@ class NewsBox extends Component {
     )
   }
 
+}
+
+const MultiLine = (props) => {
+  let myText = props.text.split('\n').map(val => {
+    return (<div key={val.substr(0,3)}>{val}</div>)
+  });
+  return (<div>{myText}</div>);
 }
 
 export default NewsBox;
