@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+import ModalBox from './ModalBox';
 import axios from 'axios';
 
 class RacesBox extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      modalDisplayed: false
+    };
     // this.toggleRaceResult = this.toggleRaceResult.bind(this);
     this.findPilotName = this.findPilotName.bind(this);
   }
@@ -38,6 +41,14 @@ class RacesBox extends Component {
     return "Pilot name not found";
   }
 
+  signUpPilot(raceId) {
+    this.setState({ modalDisplayed: true });
+  }
+
+  submitSignUp() {
+    this.setState({ modalDisplayed: false });
+  }
+
   componentDidMount() {
     this.getAllRaces();
   }
@@ -56,6 +67,7 @@ class RacesBox extends Component {
           results={myResults}
           showResult={val._id === this.state.showResult ? true : false}
           location={val.location}
+          onSignUp={this.signUpPilot.bind(this, val._id)}
           onDisplayResult={this.toggleRaceResult.bind(this, val._id)}
         />
       )
@@ -63,6 +75,11 @@ class RacesBox extends Component {
 
     return (
       <div className='races-box'>
+        {this.state.modalDisplayed ?
+          <ModalBox text='Enter your name pilot:'
+            onSubmit={this.submitSignUp.bind(this)}
+          />
+          : null}
         {racesData}
       </div>
     );
@@ -84,7 +101,7 @@ const RaceBox = (props) => {
           </tr>
           <tr>
             <td colSpan={2}>
-              <button disabled={props.results}>Sign-up</button>
+              <button disabled={props.results} onClick={props.onSignUp}>Sign-up</button>
               <button disabled={!props.results} onClick={props.onDisplayResult}>Results</button>
             </td>
           </tr>
