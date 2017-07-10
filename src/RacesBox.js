@@ -52,8 +52,17 @@ class RacesBox extends Component {
       driverName: pilotName,
       raceId: this.state.selectedRace
     }).then(res => {
-      console.log('Signup Request submitted');
+      console.log('Signup Request successfull for ' + res.data
+        + ' raceId: ' + this.state.selectedRace);
       this.setState({ modalDisplayed: false, selectedRace: null });
+    }).catch(err => {
+      // console.log(res.status, "Error submitting signup request");
+      this.setState({ modalDisplayed: false, selectedRace: null });
+      if (err.response.status === 404) {
+        alert("ERROR: Pilot not found in the database");
+      } else {
+        alert("ERROR: Race signup failed.\nPlease contact your administrator");
+      }
     });
   }
 
