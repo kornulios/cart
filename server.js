@@ -141,7 +141,7 @@ router.route('/races').get(
       races.sort((a, b) => {
         a = new Date(a.date);
         b = new Date(b.date);
-        return a>b ? -1 : a<b ? 1 : 0;
+        return a > b ? -1 : a < b ? 1 : 0;
       })
       res.json(races);
     });
@@ -157,6 +157,21 @@ router.route('/races/:race_id').get(
   }
 );
 
+router.route('/signup').post((req, res) => {
+  Drivers.findOne({ name: req.body.driverName }, (err, driver) => {
+    if (driver === null) {
+      res.status(404).send('Pilot not found');
+    } else {
+      Races.findByIdAndUpdate(req.body.raceId,
+        { $push: { signedUp: driver._id.toString() } },
+        (err, race) => {
+          res.json(driver);
+        })
+    }
+  })
+});
+
+
 
 //comment modified
 app.use('/api', router);
@@ -164,5 +179,3 @@ app.use('/api', router);
 app.listen(port, function () {
   console.log('api running on port ' + port);
 });
-
-//mode comms
