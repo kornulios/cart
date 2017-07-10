@@ -3,6 +3,8 @@ var Schema = mongoose.Schema;
 
 var DriversSchema = new Schema({
   name: String,
+  surname: String,
+  email: String,
   points: [],
   total: Number
 });
