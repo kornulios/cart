@@ -6,7 +6,7 @@ var RacesSchema = new Schema({
   date: Date,
   time: String,
   location: String,
-  signedUp: [],
+  signedUp: [{type: String}],
   results: []
 });
 
