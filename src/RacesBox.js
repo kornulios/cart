@@ -6,7 +6,9 @@ class RacesBox extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      modalDisplayed: false
+      modalDisplayed: false,
+      selectedRace: null,
+      showResult: null
     };
     // this.toggleRaceResult = this.toggleRaceResult.bind(this);
     this.findPilotName = this.findPilotName.bind(this);
@@ -42,16 +44,21 @@ class RacesBox extends Component {
   }
 
   signUpPilot(raceId) {
-    this.setState({ modalDisplayed: true });
+    this.setState({ modalDisplayed: true, selectedRace: raceId });
   }
 
   submitSignUp(pilotName) {
-    this.setState({ modalDisplayed: false });
-    alert(pilotName);
+    axios.post(this.props.apiPath + '/signup', {
+      driverName: pilotName,
+      raceId: this.state.selectedRace
+    }).then(res => {
+      console.log('Signup Request submitted');
+      this.setState({ modalDisplayed: false, selectedRace: null });
+    });
   }
 
   cancelModal() {
-    this.setState({ modalDisplayed: false });
+    this.setState({ modalDisplayed: false, selectedRace: null });
   }
 
   componentDidMount() {
