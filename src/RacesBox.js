@@ -45,7 +45,12 @@ class RacesBox extends Component {
     this.setState({ modalDisplayed: true });
   }
 
-  submitSignUp() {
+  submitSignUp(pilotName) {
+    this.setState({ modalDisplayed: false });
+    alert(pilotName);
+  }
+
+  cancelModal() {
     this.setState({ modalDisplayed: false });
   }
 
@@ -78,6 +83,7 @@ class RacesBox extends Component {
         {this.state.modalDisplayed ?
           <ModalBox text='Enter your name pilot:'
             onSubmit={this.submitSignUp.bind(this)}
+            onCancel={this.cancelModal.bind(this)}
           />
           : null}
         {racesData}
