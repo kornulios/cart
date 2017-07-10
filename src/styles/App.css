@@ -176,6 +176,16 @@ label {
   padding-top: 30px;
   text-align: center;
   width: 420px;
-  height: 150px;
   background-color: #fefefe;
+}
+
+.modal-body {
+  padding-bottom: 20px;
+}
+
+.modal-footer {
+  height: 45px;
+  line-height: 45px;
+  background-color: #ff5b4c;
+  color: white;
 }
