@@ -2,14 +2,24 @@ import React, { Component } from 'react';
 
 class ModalBox extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: ""
+    }
+  }
+
   submitForm() {
-    let val = 'Kalunga';
-    this.props.onSubmit(val);
+    this.props.onSubmit(this.state.value);
   }
 
   handleClick(e) {
     e.preventDefault();
     if (e.target.id === 'modal-id') this.props.onCancel();
+  }
+
+  handleChange(event) {
+    this.setState({ value: event.target.value })
   }
 
   render() {
@@ -26,7 +36,11 @@ class ModalBox extends Component {
         <div className='modal-content'>
           <div className='modal-body'>
             <p>{this.props.text}</p>
-            <input type="text" value="Balue"></input>
+            <input
+              type="text"
+              value={this.state.value}
+              onChange={this.handleChange.bind(this)}
+            />
           </div>
           {modalFooter}
         </div>
