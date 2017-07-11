@@ -55,8 +55,8 @@ class RacesBox extends Component {
       console.log('Signup Request successfull for ' + res.data
         + ' raceId: ' + this.state.selectedRace);
       this.setState({ modalDisplayed: false, selectedRace: null });
+      this.getAllRaces();
     }).catch(err => {
-      // console.log(res.status, "Error submitting signup request");
       this.setState({ modalDisplayed: false, selectedRace: null });
       if (err.response.status === 404) {
         alert("ERROR: Pilot not found in the database");
@@ -79,6 +79,9 @@ class RacesBox extends Component {
       let myResults = (val.results.length > 0 ?
         val.results.map(res => (<li key={res}>{this.findPilotName(res)}</li>))
         : false);
+      let mySignedUp = (val.signedUp.length > 0 ? 
+        val.signedUp.map(res => (<span key={res}>{this.findPilotName(res)}&nbsp;</span>))
+       : false );
       return (
         <RaceBox
           key={val._id}
@@ -86,6 +89,7 @@ class RacesBox extends Component {
           name={val.name}
           time={val.time}
           results={myResults}
+          signed={mySignedUp}
           showResult={val._id === this.state.showResult ? true : false}
           location={val.location}
           onSignUp={this.signUpPilot.bind(this, val._id)}
@@ -127,6 +131,7 @@ const RaceBox = (props) => {
               <button disabled={!props.results} onClick={props.onDisplayResult}>Results</button>
             </td>
           </tr>
+          {props.signed ? (<tr><td colSpan={2}>Signed up: {props.signed}</td></tr>) : null}
           {props.showResult ? (<tr><td colSpan={2}>
             <ol>{props.results}</ol>
           </td></tr>) : null}
