@@ -48,7 +48,6 @@ ul {
 .newsbox {
   border: 1px solid lightgray;
   padding-left: 3px;
-  /*margin-top: -1px;*/
   margin-bottom: 8px;
 }
 
@@ -71,6 +70,8 @@ ul {
 
 .pages a {
   text-decoration: none;
+  color: gray;
+  font-style: italic;
 }
 
 .news-container {
@@ -189,3 +190,4 @@ label {
   background-color: #ff5b4c;
   color: white;
 }
+

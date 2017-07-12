@@ -5,26 +5,19 @@ class NewsBox extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentPage: 1,
       newsPerPage: 6,
+      displayedNews: 6,
       data: []
     }
     this.showNextPage = this.showNextPage.bind(this);
-    this.showPrevPage = this.showPrevPage.bind(this);
     this.loadNews = this.loadNews.bind(this);
   }
 
   showNextPage(e) {
     e.preventDefault();
-    const totalNewsLength = this.props.data.length;
-    const maxPages = totalNewsLength / this.state.newsPerPage;
-    if (this.state.currentPage < maxPages)
-      this.setState({ currentPage: this.state.currentPage + 1 });
-  }
-
-  showPrevPage(e) {
-    e.preventDefault();
-    if (this.state.currentPage > 1) this.setState({ currentPage: this.state.currentPage - 1 });
+    let displayed = this.state.displayedNews + 6;
+    if (displayed > this.state.data.length) displayed = this.state.data.length
+    this.setState({ displayedNews: displayed });
   }
 
   loadNews() {
@@ -37,11 +30,13 @@ class NewsBox extends Component {
     this.loadNews();
   }
 
-  render() {
-    const lastNews = this.state.currentPage * this.state.newsPerPage;
-    const firstNews = lastNews - this.state.newsPerPage;
-    const currentNews = this.state.data.slice(firstNews, lastNews);
+  componentDidUpdate() {
+    window.scrollTo(0, document.body.scrollHeight);
+    // this.newsNode.scrollIntoView({ block: "end", behavior: 'smooth' });
+  }
 
+  render() {
+    const currentNews = this.state.data.slice(0, this.state.displayedNews);
     const newsNodes = (this.state.data.length > 0) ? (currentNews.map(item =>
       (
         <div className='newsbox' key={item._id}>
@@ -53,14 +48,13 @@ class NewsBox extends Component {
     ) : (<div>Loading...</div>);
 
     return (
-      <div className='news-container fx-item'>
+      <div className='news-container fx-item' ref={(div) => (this.newsNode = div)}>
         <div className=''>
           <h2>News:</h2>
           {newsNodes}
         </div>
         <div className='pages '>
-          <a href='#' onClick={this.showPrevPage}>&#9668;</a>&nbsp;
-          <a href='#' onClick={this.showNextPage}>&#9658;</a>
+          <a href='#' onClick={this.showNextPage} className='more-button'>{this.state.data.length === this.state.displayedNews ? 'No more news' : 'More'}</a>
         </div>
       </div>
     )
@@ -70,7 +64,7 @@ class NewsBox extends Component {
 
 const MultiLine = (props) => {
   let myText = props.text.split('\n').map(val => {
-    return (<div key={val.substr(0,3)}>{val}</div>)
+    return (<div key={val.substr(0, 3)}>{val}</div>)
   });
   return (<div>{myText}</div>);
 }
